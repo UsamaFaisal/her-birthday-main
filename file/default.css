@@ -206,6 +206,27 @@ a {
   touch-action: manipulation;
 }
 
+.heart-hit {
+  position: absolute;
+  left: 48.2%;
+  top: 50%;
+  z-index: 6;
+  width: 30%;
+  height: 38%;
+  min-width: 96px;
+  min-height: 96px;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.heart-hit.is-gone {
+  display: none;
+}
+
 #hint {
   position: absolute;
   left: 50%;

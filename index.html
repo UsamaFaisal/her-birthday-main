@@ -36,9 +36,8 @@
     <main id="main">
         <div id="error">Please open this page in a modern browser such as Chrome, Safari, or Firefox.</div>
 
-        <audio autoplay="autoplay" id="myAudio">
-            <source src="aud.mp3" type="audio/mp3" />
-            <embed src="aud.mp3" />
+        <audio id="myAudio" src="aud.mp3" loop preload="auto" playsinline webkit-playsinline>
+            <source src="aud.mp3" type="audio/mpeg">
         </audio>
 
         <div class="play">
@@ -46,6 +45,7 @@
                 <div id="wrap">
                     <canvas id="canvas" width="1100" height="680"></canvas>
                 </div>
+                <button type="button" class="heart-hit" id="heartHit" aria-label="Tap the heart"></button>
                 <div id="hint">
                     <div class="hint-heart">♥</div>
                     <p class="hint-copy">Tap the heart</p>
@@ -78,10 +78,17 @@
         var canvas = $('#canvas');
         var hint = document.getElementById('hint');
         var musicBtn = document.getElementById('musicBtn');
+        var heartHit = document.getElementById('heartHit');
 
         function playAudio() {
             var audio = document.getElementById("myAudio");
-            if (audio) audio.play();
+            if (!audio) return;
+            audio.muted = false;
+            audio.volume = 1;
+            var playPromise = audio.play();
+            if (playPromise && playPromise.catch) {
+                playPromise.catch(function() {});
+            }
         }
 
         function viewportSize() {
@@ -211,10 +218,10 @@
         function startFromHeart() {
             if (!hold) return;
             hold = 0;
+            if (heartHit) heartHit.classList.add('is-gone');
             hint.classList.add('hide');
             tree.ctx.clearRect(0, 0, width, height);
             seed.drawHeart();
-            playAudio();
             canvas.unbind("click");
             canvas.unbind("mousemove");
             canvas[0].removeEventListener('pointerdown', onPointer);
@@ -222,11 +229,22 @@
             canvas.removeClass('hand');
         }
 
-        function onPointer(e) {
+        function activateHeart(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
             playAudio();
+            startFromHeart();
+        }
+
+        function onPointer(e) {
             var pos = pointerPos(e);
-            if (hitHeart(pos.x, pos.y)) {
-                startFromHeart();
+            var dx = pos.x - seed.heart.point.x;
+            var dy = pos.y - seed.heart.point.y;
+            var radius = viewportSize().w <= 820 ? 180 : 120;
+            if (dx * dx + dy * dy <= radius * radius) {
+                activateHeart(e);
             }
         }
 
@@ -240,6 +258,11 @@
         });
         canvas[0].addEventListener('pointerdown', onPointer);
         canvas[0].addEventListener('touchstart', onTouch, { passive: true });
+
+        if (heartHit) {
+            heartHit.addEventListener('click', activateHeart);
+            heartHit.addEventListener('touchend', activateHeart, { passive: false });
+        }
 
         var seedAnimate = eval(Jscex.compile("async", function () {
             seed.draw();
