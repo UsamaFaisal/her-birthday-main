@@ -167,21 +167,26 @@
 
             ctx.moveTo(0, 0);
             ctx.scale(0.75, 0.75);
-            ctx.font = "12px,Verdana"; // 字号肿么没有用? (ˉ(∞)ˉ)
-            ctx.fillText("Click Me:) ", 30, -5);
+            ctx.font = "12px Verdana";
+            ctx.fillText("Tap Me :)", 30, -5);
             ctx.fillText("Birthday Queen !", 28, 10);
             ctx.restore();
         },
         clear: function() {
-            var ctx = this.tree.ctx, cirle = this.cirle;
-            var point = cirle.point, scale = cirle.scale, radius = 26;
-            var w = h = (radius * scale);
-            ctx.clearRect(point.x - w, point.y - h, 4 * w, 4 * h);
+            var ctx = this.tree.ctx, heart = this.heart;
+            var point = heart.point;
+            var s = Math.max(heart.scale, 1);
+            ctx.clearRect(point.x - 90 * s, point.y - 70 * s, 360 * s, 160 * s);
         },
         hover: function(x, y) {
             var ctx = this.tree.ctx;
+            x = Math.floor(x);
+            y = Math.floor(y);
+            if (x < 0 || y < 0 || x >= this.tree.width || y >= this.tree.height) {
+                return false;
+            }
             var pixel = ctx.getImageData(x, y, 1, 1);
-            return pixel.data[3] == 255
+            return pixel.data[3] == 255;
         }
     }
 
@@ -700,21 +705,26 @@
 
             ctx.moveTo(0, 0);
             ctx.scale(0.75, 0.75);
-            ctx.font = "12px,Verdana"; // 字号肿么没有用? (ˉ(∞)ˉ)
-            ctx.fillText("Click Me:) ", 30, -5);
+            ctx.font = "12px Verdana";
+            ctx.fillText("Tap Me :)", 30, -5);
             ctx.fillText("Birthday Queen !", 28, 10);
             ctx.restore();
         },
         clear: function() {
-            var ctx = this.tree.ctx, cirle = this.cirle;
-            var point = cirle.point, scale = cirle.scale, radius = 26;
-            var w = h = (radius * scale);
-            ctx.clearRect(point.x - w, point.y - h, 4 * w, 4 * h);
+            var ctx = this.tree.ctx, heart = this.heart;
+            var point = heart.point;
+            var s = Math.max(heart.scale, 1);
+            ctx.clearRect(point.x - 90 * s, point.y - 70 * s, 360 * s, 160 * s);
         },
         hover: function(x, y) {
             var ctx = this.tree.ctx;
+            x = Math.floor(x);
+            y = Math.floor(y);
+            if (x < 0 || y < 0 || x >= this.tree.width || y >= this.tree.height) {
+                return false;
+            }
             var pixel = ctx.getImageData(x, y, 1, 1);
-            return pixel.data[3] == 255
+            return pixel.data[3] == 255;
         }
     }
 

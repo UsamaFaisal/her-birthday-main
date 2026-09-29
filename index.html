@@ -1,65 +1,146 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Happy Birthday Laiba</title>	    
-    <link type="text/css" rel="stylesheet" href="file/default.css">
-    <script type="text/javascript" src="file/jquery.min.js"></script>
-    <script type="text/javascript" src="file/jscex.min.js"></script>
-    <script type="text/javascript" src="file/jscex-parser.js"></script>
-    <script type="text/javascript" src="file/jscex-jit.js"></script>
-    <script type="text/javascript" src="file/jscex-builderbase.min.js"></script>
-    <script type="text/javascript" src="file/jscex-async.min.js"></script>
-    <script type="text/javascript" src="file/jscex-async-powerpack.min.js"></script>
-    <script type="text/javascript" src="file/function.js" charset="utf-8"></script>
-    <script type="text/javascript" src="file/love.js" charset="utf-8"></script>
-    <script>
-        function playAudio() {
-            var audio = document.getElementById("myAudio");
-            audio.play();
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#14040c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Happy Birthday Esha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Nunito:wght@500;650;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="file/default.css">
+    <script src="file/jquery.min.js"></script>
+    <script src="file/jscex.min.js"></script>
+    <script src="file/jscex-parser.js"></script>
+    <script src="file/jscex-jit.js"></script>
+    <script src="file/jscex-builderbase.min.js"></script>
+    <script src="file/jscex-async.min.js"></script>
+    <script src="file/jscex-async-powerpack.min.js"></script>
+    <script src="file/function.js" charset="utf-8"></script>
+    <script src="file/love.js" charset="utf-8"></script>
 </head>
 <body>
-    <div id="main">
-        <div id="error"><a href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a> (<a href="http://firefox.com.cn/download/">Firefox</a>)</div>
-        <audio autoplay="autoplay" height="100" width="100" id="myAudio">
+    <div class="atmosphere" aria-hidden="true">
+        <div class="stars"></div>
+        <div class="glow"></div>
+        <div class="grain"></div>
+        <div id="petals"></div>
+    </div>
+
+    <header class="topbar">
+        <p class="eyebrow">Happy Birthday, Esha</p>
+        <button type="button" class="music-btn" id="musicBtn" aria-label="Play music" title="Music">♪</button>
+    </header>
+
+    <main id="main">
+        <div id="error">Please open this page in a modern browser such as Chrome, Safari, or Firefox.</div>
+
+        <audio autoplay="autoplay" id="myAudio">
             <source src="aud.mp3" type="audio/mp3" />
-            <embed height="100" width="100" src="aud.mp3" />
+            <embed src="aud.mp3" />
         </audio>
-        <div id="wrap">
-            <div id="text">
-                <div id="code">
-                    <span class="say">Hey Laiba 💞</span><br>
-                    <span class="say">Happy Birthday to uhh 🎈</span><br>
-                    <span class="say">Many Many Happy Returns of the Day 💕</span><br>
-                    <span class="say">May God bless you 🍀</span><br>
-                    <span class="say">And give u many happiness 💕</span><br>
-                    <span class="say">Just saying... you're pretty awesome ❤️</span><br>
-                    <span class="say">Sending good vibes and maybe a wink 😏</span><br>
-                    <span class="say">Hope u have a great day today ❤️😘</span><br>
-                    <span class="say">- - - - - - - - - </span><br>
-                    <span class="say">From Usama Faisal</span><br>
+
+        <div class="play">
+            <div id="stage">
+                <div id="wrap">
+                    <canvas id="canvas" width="1100" height="680"></canvas>
+                </div>
+                <div id="hint">
+                    <div class="hint-heart">♥</div>
+                    <p class="hint-copy">Tap the heart</p>
                 </div>
             </div>
+
+            <section id="letter">
+                <div id="code">
+                    <span class="say">Hey Esha 💞</span>
+                    <span class="say">Happy Birthday to you 🎈</span>
+                    <span class="say">Many many happy returns of the day 💕</span>
+                    <span class="say">May God bless you 🍀</span>
+                    <span class="say">and fill your year with happiness 💕</span>
+                    <span class="say">Just saying... you're pretty awesome ❤️</span>
+                    <span class="say">Sending good vibes, and maybe a wink 😏</span>
+                    <span class="say">Hope you have a beautiful day today ❤️😘</span>
+                    <span class="divider">✦ ✦ ✦</span>
+                    <span class="say from">From Usama</span>
+                </div>
+            </section>
+
             <div id="clock-box">
-                <span id="clock">577 days 0 hours 0 minutes 0 seconds</span> <!-- Change to "6940 days..." if needed -->
+                The world is luckier with you in it.
             </div>
-            <canvas id="canvas" width="1100" height="680"></canvas>
         </div>
-    </div>
+    </main>
 
     <script>
     (function() {
         var canvas = $('#canvas');
-		
-        if (!canvas[0].getContext) {
-            $("#error").show();
-            return false;
+        var hint = document.getElementById('hint');
+        var musicBtn = document.getElementById('musicBtn');
+
+        function playAudio() {
+            var audio = document.getElementById("myAudio");
+            if (audio) audio.play();
         }
 
-        var width = canvas.width();
-        var height = canvas.height();        
+        function viewportSize() {
+            var vv = window.visualViewport;
+            return {
+                w: (vv && vv.width) ? vv.width : window.innerWidth,
+                h: (vv && vv.height) ? vv.height : window.innerHeight
+            };
+        }
+
+        function fitScene() {
+            var baseW = 1100;
+            var baseH = 680;
+            var view = viewportSize();
+            var header = document.querySelector('.topbar');
+            var headerH = header ? header.getBoundingClientRect().height : 48;
+            var isNarrow = view.w <= 820;
+            var availW = Math.max(260, view.w - (isNarrow ? 20 : 32));
+            var availH = isNarrow
+                ? Math.max(210, view.h * 0.46)
+                : Math.max(220, view.h - headerH - 28);
+            var scale = Math.min(availW / baseW, availH / baseH, 1);
+            document.documentElement.style.setProperty('--scene-scale', String(scale));
+        }
+
+        function spawnPetals() {
+            var wrap = document.getElementById('petals');
+            if (!wrap) return;
+            var count = window.innerWidth < 700 ? 10 : 16;
+            for (var i = 0; i < count; i++) {
+                var p = document.createElement('span');
+                p.className = 'petal';
+                p.style.left = (Math.random() * 100) + 'vw';
+                p.style.animationDuration = (9 + Math.random() * 10) + 's';
+                p.style.animationDelay = (-Math.random() * 12) + 's';
+                p.style.transform = 'scale(' + (0.6 + Math.random() * 0.8) + ')';
+                wrap.appendChild(p);
+            }
+        }
+
+        musicBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            playAudio();
+        });
+
+        fitScene();
+        spawnPetals();
+        window.addEventListener('resize', fitScene);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', fitScene);
+        }
+
+        if (!canvas[0].getContext) {
+            $("#error").show();
+            return;
+        }
+
+        var width = 1100;
+        var height = 680;
         canvas.attr("width", width);
         canvas.attr("height", height);
 
@@ -85,42 +166,80 @@
                     [546, 357, 608, 252, 678, 221, 6, 100, [
                         [590, 293, 646, 277, 648, 271, 2, 80]
                     ]]
-                ]] 
+                ]]
             ],
             bloom: {
-                num: 700,
+                num: window.innerWidth < 700 ? 420 : 700,
                 width: 1080,
-                height: 650,
+                height: 650
             },
             footer: {
                 width: 1200,
                 height: 5,
-                speed: 10,
+                speed: 10
             }
-        }
+        };
 
         var tree = new Tree(canvas[0], width, height, opts);
         var seed = tree.seed;
         var foot = tree.footer;
         var hold = 1;
 
-        canvas.click(function(e) {
+        function pointerPos(e) {
+            var el = canvas[0];
+            var rect = el.getBoundingClientRect();
+            var point = (e.changedTouches && e.changedTouches[0]) ||
+                        (e.touches && e.touches[0]) || e;
+            var clientX = point.clientX;
+            var clientY = point.clientY;
+            return {
+                x: (clientX - rect.left) * (el.width / Math.max(rect.width, 1)),
+                y: (clientY - rect.top) * (el.height / Math.max(rect.height, 1))
+            };
+        }
+
+        function hitHeart(x, y) {
+            var hx = seed.heart.point.x;
+            var hy = seed.heart.point.y;
+            var dx = x - hx;
+            var dy = y - hy;
+            var radius = viewportSize().w <= 820 ? 180 : 120;
+            if (dx * dx + dy * dy <= radius * radius) return true;
+            return seed.hover(x, y);
+        }
+
+        function startFromHeart() {
+            if (!hold) return;
+            hold = 0;
+            hint.classList.add('hide');
+            tree.ctx.clearRect(0, 0, width, height);
+            seed.drawHeart();
             playAudio();
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
-            if (seed.hover(x, y)) {
-                hold = 0; 
-                canvas.unbind("click");
-                canvas.unbind("mousemove");
-                canvas.removeClass('hand');
+            canvas.unbind("click");
+            canvas.unbind("mousemove");
+            canvas[0].removeEventListener('pointerdown', onPointer);
+            canvas[0].removeEventListener('touchstart', onTouch);
+            canvas.removeClass('hand');
+        }
+
+        function onPointer(e) {
+            playAudio();
+            var pos = pointerPos(e);
+            if (hitHeart(pos.x, pos.y)) {
+                startFromHeart();
             }
-        }).mousemove(function(e) {
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
-            canvas.toggleClass('hand', seed.hover(x, y));
+        }
+
+        function onTouch(e) {
+            onPointer(e);
+        }
+
+        canvas.click(onPointer).mousemove(function(e) {
+            var pos = pointerPos(e);
+            canvas.toggleClass('hand', hitHeart(pos.x, pos.y));
         });
+        canvas[0].addEventListener('pointerdown', onPointer);
+        canvas[0].addEventListener('touchstart', onTouch, { passive: true });
 
         var seedAnimate = eval(Jscex.compile("async", function () {
             seed.draw();
@@ -160,23 +279,33 @@
             }
             foot.draw();
             tree.snapshot("p2", 500, 0, 610, 680);
-
-            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-            canvas.css("background", "#ffe");
+            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ") center / 100% 100% no-repeat");
+            canvas.css("background", "transparent");
             $await(Jscex.Async.sleep(300));
             canvas.css("background", "none");
         }));
 
+        var jumpAnimate = eval(Jscex.compile("async", function () {
+            while (true) {
+                tree.ctx.clearRect(0, 0, width, height);
+                tree.jump();
+                foot.draw();
+                $await(Jscex.Async.sleep(25));
+            }
+        }));
+
         var textAnimate = eval(Jscex.compile("async", function () {
+            document.body.classList.add('is-writing');
             $("#code").show().typewriter();
         }));
-	    
+
         var runAsync = eval(Jscex.compile("async", function () {
             $await(seedAnimate());
             $await(growAnimate());
             $await(flowAnimate());
             $await(moveAnimate());
             textAnimate().start();
+            $await(jumpAnimate());
         }));
 
         runAsync().start();

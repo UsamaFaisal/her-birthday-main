@@ -1,22 +1,13 @@
-
-
-// variables
-var $win = $(window);
-var clientWidth = $win.width();
-var clientHeight = $win.height();
-
-$(window).resize(function() {
-    var newWidth = $win.width();
-    var newHeight = $win.height();
-    if (newWidth != clientWidth && newHeight != clientHeight) {
-        location.replace(location);
-    }
-});
-
 (function($) {
 	$.fn.typewriter = function() {
 		this.each(function() {
-			var $ele = $(this), str = $ele.html(), progress = 0;
+			var $ele = $(this);
+			var str = $ele.html();
+			var progress = 0;
+			var locked = this.scrollHeight;
+			if (locked > 0) {
+				$ele.css('min-height', locked + 'px');
+			}
 			$ele.html('');
 			var timer = setInterval(function() {
 				var current = str.substr(progress, 1);
@@ -25,8 +16,9 @@ $(window).resize(function() {
 				} else {
 					progress++;
 				}
-				$ele.html(str.substring(0, progress) + (progress & 1 ? '_' : ''));
-				if (progress >= str.length) {
+				var done = progress >= str.length;
+				$ele.html(str.substring(0, progress) + (done ? '' : '<span class="tw-caret" aria-hidden="true"></span>'));
+				if (done) {
 					clearInterval(timer);
 				}
 			}, 75);
@@ -35,7 +27,7 @@ $(window).resize(function() {
 	};
 })(jQuery);
 
-function timeElapse(date){
+function timeElapse(date) {
 	var current = Date();
 	var seconds = (Date.parse(current) - Date.parse(date)) / 1000;
 	var days = Math.floor(seconds / (3600 * 24));
@@ -53,10 +45,6 @@ function timeElapse(date){
 	if (seconds < 10) {
 		seconds = "0" + seconds;
 	}
-	var result = "Days <span class=\"digit\">" + days + "</span> Hours <span class=\"digit\">" + hours + "</span> Minutes <span class=\"digit\">" + minutes; 
+	var result = "Days <span class=\"digit\">" + days + "</span> Hours <span class=\"digit\">" + hours + "</span> Minutes <span class=\"digit\">" + minutes;
 	$("#clock").html(result);
-
-	var text = "THE WORLD JUST GOT LUCKIER SINCE ";
-	$("#message-box").html(text);
-
 }
